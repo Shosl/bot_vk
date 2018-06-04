@@ -15,17 +15,14 @@ def main():
     id_for_telegram = os.environ['CHAT_ID']
 
     bot = telebot.TeleBot(token)
-    
-    def captcha_handler(captcha):
-        key = input("Enter captcha code {0}: ".format(captcha.get_url())).strip()
-        return captcha.try_again(key)
+    apihelper.proxy = {'https': 'socks5://telegram:telegram@frkw.cf:1080'}
 
     vk_session = vk_api.VkApi(login=login,
                               password=password,
-                              captcha_handler=captcha_handler,
                               app_id=app_vk,
                               )
     vk_session.auth()
+    vk_session.http.proxies = { 'http': 'http://5.100.81.11:3128/'}
     longpoll = VkLongPoll(vk_session)
     vk = vk_session.get_api()
 
