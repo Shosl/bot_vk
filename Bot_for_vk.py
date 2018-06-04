@@ -18,7 +18,6 @@ def main():
     
     def captcha_handler(captcha):
         key = input("Enter captcha code {0}: ".format(captcha.get_url())).strip()
-        bot.send_message(chat_id=id_for_telegram, text=key)
         return captcha.try_again(key)
 
     vk_session = vk_api.VkApi(login=login,
