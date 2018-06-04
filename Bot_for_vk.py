@@ -15,9 +15,14 @@ def main():
     id_for_telegram = os.environ['CHAT_ID']
 
     bot = telebot.TeleBot(token)
+    
+    def captcha_handler(captcha):
+        key = input("Enter captcha code {0}: ".format(captcha.get_url())).strip()
+        return captcha.try_again(key)
 
     vk_session = vk_api.VkApi(login=login,
                               password=password,
+                              captcha_handler=captcha_handler,
                               app_id=app_vk,
                               )
     vk_session.auth()
