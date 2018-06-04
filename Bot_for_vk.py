@@ -15,7 +15,6 @@ def main():
     id_for_telegram = os.environ['CHAT_ID']
 
     bot = telebot.TeleBot(token)
-    apihelper.proxy = {'https': 'socks5://telegram:telegram@frkw.cf:1080'}
 
     vk_session = vk_api.VkApi(login=login,
                               password=password,
