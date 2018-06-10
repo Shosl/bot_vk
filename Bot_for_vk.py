@@ -16,7 +16,8 @@ def main():
     vk_session = vk_api.VkApi(token=token_vk)
     longpoll = VkLongPoll(vk_session)
     vk = vk_session.get_api()
-
+    print('ok')
+    
     def get_profile_user(field):
         return vk.users.get(user_id=event.user_id, fields=field)
 
