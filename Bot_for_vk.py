@@ -4,7 +4,6 @@ from datetime import datetime
 import vk_api
 from vk_api.longpoll import VkLongPoll, VkEventType
 import telebot
-from telebot import apihelper
 
 
 def main():
@@ -13,7 +12,6 @@ def main():
     id_for_telegram = os.environ['CHAT_ID']
 
     bot = telebot.TeleBot(token)
-    apihelper.proxy = {'https': 'socks5://telegram:telegram@frkw.cf:1080'}
 
     vk_session = vk_api.VkApi(token=token_vk)
     longpoll = VkLongPoll(vk_session)
