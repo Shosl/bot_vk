@@ -74,14 +74,12 @@ def main():
                                                                 str(event.user_id),
                                                                 event.text)
                 bot.send_message(chat_id=id_for_telegram, text=text)
-                vk.status.set(text=text)
             elif event.from_chat:
                 text = 'Сообщение от: {}({}). из беседы: {}. Текст: {}'.format(get_fam_name(),
                                                                                str(event.user_id),
                                                                                str(event.chat_id),
                                                                                event.text)
                 bot.send_message(chat_id=id_for_telegram, text=text)
-                vk.status.set(text=text)
             elif event.from_group:
                 text = 'Сообщение от группы: {}. Текст: {}'.format(str(event.group_id),
                                                                    event.text)
