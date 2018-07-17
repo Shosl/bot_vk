@@ -35,56 +35,57 @@ def main():
         last_name = get_profile_user('last_name')[0]['last_name']
         first_name = get_profile_user('first_name')[0]['first_name']
         return last_name + ' ' + first_name
-
+    
+    def send_message(id_for_telegram, text_message):
+        bot.send_message(chat_id=id_for_telegram, text=text_message)
+        vk.status.set(text=text_message)
+    
     for event in longpoll.listen():
         if event.type == VkEventType.USER_ONLINE:
             time_vk_server = vk.utils.getServerTime()
             online_time_user = datetime.fromtimestamp(time_vk_server).strftime('%H:%M:%S')
-            text = 'Пользователь: {}({}). Онлайн с: {}. Время захода: {}'.format(get_fam_name(),
+            text_message = 'Пользователь: {}({}). Онлайн с: {}. Время захода: {}'.format(get_fam_name(),
                                                                                  str(event.user_id),
                                                                                  get_platform_or_app(),
                                                                                  online_time_user)
-            bot.send_message(chat_id=id_for_telegram, text=text)
-            vk.status.set(text=text)
+            send_message(id_for_telegram, text_message)
 
         elif event.type == VkEventType.USER_OFFLINE:
-            text = 'Пользователь: {}({}). Время ухода: {}'.format(get_fam_name(),
+            text_message = 'Пользователь: {}({}). Время ухода: {}'.format(get_fam_name(),
                                                                   str(event.user_id),
                                                                   get_last_seen())
-            bot.send_message(chat_id=id_for_telegram, text=text)
-            vk.status.set(text=text)
+            send_message(id_for_telegram, text_message)
             
         elif event.type == VkEventType.USER_TYPING:
             if event.from_user:
-                text = 'Пользователь: {}({}) печатает'.format(get_fam_name(),
+                text_message = 'Пользователь: {}({}) печатает'.format(get_fam_name(),
                                                               str(event.user_id))
-                bot.send_message(chat_id=id_for_telegram, text=text)
-                vk.status.set(text=text)
+                send_message(id_for_telegram, text_message)
 
         elif event.type == VkEventType.USER_TYPING_IN_CHAT:
-            text = 'Пользователь: {}({}) печатает из беседы: {}'.format(get_fam_name(),
+            text_message = 'Пользователь: {}({}) печатает из беседы: {}'.format(get_fam_name(),
                                                                         str(event.user_id),
                                                                         str(event.chat_id))
-            bot.send_message(chat_id=id_for_telegram, text=text)
-            vk.status.set(text=text)
+            send_message(id_for_telegram, text_message)
 
         elif event.type == VkEventType.MESSAGE_NEW and not event.from_me:
             if event.from_user:
-                text = 'Сообщение от: {}({}). Текст: {}'.format(get_fam_name(),
+                text_message = 'Сообщение от: {}({}). Текст: {}'.format(get_fam_name(),
                                                                 str(event.user_id),
                                                                 event.text)
-                bot.send_message(chat_id=id_for_telegram, text=text)
+                bot.send_message(chat_id=id_for_telegram, text=text_message)
+                
             elif event.from_chat:
-                text = 'Сообщение от: {}({}). из беседы: {}. Текст: {}'.format(get_fam_name(),
+                text_message = 'Сообщение от: {}({}). из беседы: {}. Текст: {}'.format(get_fam_name(),
                                                                                str(event.user_id),
                                                                                str(event.chat_id),
                                                                                event.text)
-                bot.send_message(chat_id=id_for_telegram, text=text)
+                bot.send_message(chat_id=id_for_telegram, text=text_message)
+                
             elif event.from_group:
-                text = 'Сообщение от группы: {}. Текст: {}'.format(str(event.group_id),
+                text_message = 'Сообщение от группы: {}. Текст: {}'.format(str(event.group_id),
                                                                    event.text)
-                bot.send_message(chat_id=id_for_telegram, text=text)
-                vk.status.set(text=text)
+                send_message(id_for_telegram, text_message)
 
 
 if __name__ == '__main__':
