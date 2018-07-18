@@ -1,4 +1,4 @@
-import os
+from os import environ
 from datetime import datetime
 
 import vk_api
@@ -7,9 +7,9 @@ import telebot
 
 
 def main():
-    token = os.environ['TELEGRAM_TOKEN']
-    token_vk = os.environ['VK_TOKEN']
-    id_for_telegram = os.environ['CHAT_ID']
+    token = environ['TELEGRAM_TOKEN']
+    token_vk = environ['VK_TOKEN']
+    id_for_telegram = environ['CHAT_ID']
 
     bot = telebot.TeleBot(token)
 
